@@ -23,5 +23,8 @@ class TestPassHash(unittest.TestCase):
         self.assertFalse(UA.verify_password("", hashed))
         self.assertFalse(UA.verify_password(None, hashed))
 
+    def test_database(self):
+        pass
+
 if __name__ == '__main__':
     unittest.main()
