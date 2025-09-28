@@ -2,32 +2,35 @@ import re
 
 url = input('Enter your url here: ')
 
-def subdomain_extractor(url: str) -> str | None:
+def subdomain_extractor(url: str) -> str:
     if url.startswith('http'):
         # Extract the subdomain using regex
         match1 = re.search(r'(?<=https://).*', url)
         match2 = re.search(r'(?<=http://).*', url)
 
-        if match1 or match1:
+        if match1:
             subdomain = match1.group(0).split('.')[0]
             return subdomain
-            
-        elif match1 or match2:
+
+        elif match2:
             subdomain = match2.group(0).split('.')[0]
             return subdomain
 
     elif url.startswith('www.'):
         # Extract subdomain from www
         url_split = url.split('.')
-        
-        if len(url_split) == 3:
-            subdomain = url_split[0]
-            return subdomain
+        for i in range(len(url_split)):
 
-        elif len(url_split) == 4:
-            subdomain = url_split[1]
-            return subdomain
+            if i == len(url_split) - 1:
+                subdomain = url_split[0]
+                return subdomain
+
+            elif len(url_split) > 3:
+                subdomains = url_split[:len(url_split) - 2]
+                main_subdomain = url_split[0]
+                return f'subdomains are: {subdomains}, but the main subdomain is: {main_subdomain}'
 
 
 if __name__ == '__main__':
-    subdomain = subdomain_extractor(url)
+    subdomain = subdomain_extractor(url.lower())
+    print(subdomain)
